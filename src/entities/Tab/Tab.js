@@ -3,34 +3,22 @@ import React from "react";
 
 import classes from "./Tab.module.scss";
 
-const Tab = () => {
+const Tab = (props) => {
   return (
-    <>
-      <li className={`${classes["tabsMenu__item"]} ${classes["tabsMenu__item--cheapest"]}`}>
-        <a
-          href="#"
-          className={classes["tabsMenu__button"]}
-        >
-          Самый дешевый
-        </a>
-      </li>
-      <li className={`${classes["tabsMenu__item"]} ${classes["tabsMenu__item--fastest"]}`}>
-        <a
-          href="#"
-          className={classes["tabsMenu__button"]}
-        >
-          Оптимальный
-        </a>
-      </li>
-      <li className={`${classes["tabsMenu__item"]} ${classes["tabsMenu__item--optimal"]}`}>
-        <a
-          href="#"
-          className={classes["tabsMenu__button"]}
-        >
-          Самый быстрый
-        </a>
-      </li>
-    </>
+    <li
+      className={`${classes["tabsMenu__item"]}
+      ${props.isActive ? classes["tabsMenu__item--active"] : null}
+`}
+    >
+      <a
+        href="#"
+        className={`${classes["tabsMenu__button"]}
+        ${props.isActive ? classes["tabsMenu__button--active"] : null}
+  `}
+      >
+        {props.tabText}
+      </a>
+    </li>
   );
 };
 
