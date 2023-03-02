@@ -1,3 +1,3 @@
-import FilterFlight from "./FilterFlight";
+import FilterFlight from "./ui";
 
 export default FilterFlight;

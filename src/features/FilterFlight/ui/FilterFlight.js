@@ -1,22 +1,34 @@
-import React from "react";
-// import PropTypes from "prop-types";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
-import * as actions from "./model/actions";
+import * as actions from "../model/actions";
+
 import classes from "./FilterFlight.module.scss";
 
 const FilterFlight = ({
-  state,
+  filter,
+  filters,
+  turnOnFilterAll,
+  turnOnFilterNone,
   filterAll,
   filterNonStop,
   filterOnePlaneChange,
   filterTwoPlaneChanges,
   filterThreePlaneChange,
 }) => {
-  const second = state.filterFlightReducer.payload.second;
-  const third = state.filterFlightReducer.payload.third;
-  const fourth = state.filterFlightReducer.payload.fourth;
-  const fifth = state.filterFlightReducer.payload.fifth;
+  const FILTER_NON_STOP = filters.FILTER_NON_STOP;
+  const FILTER_ONE_PLANE_CHANGE = filters.FILTER_ONE_PLANE_CHANGE;
+  const FILTER_TWO_PLANE_CHANGES = filters.FILTER_TWO_PLANE_CHANGES;
+  const FILTER_THREE_PLANE_CHANGES = filters.FILTER_THREE_PLANE_CHANGES;
+
+  useEffect(() => {
+    if (FILTER_NON_STOP && FILTER_ONE_PLANE_CHANGE && FILTER_TWO_PLANE_CHANGES && FILTER_THREE_PLANE_CHANGES) {
+      turnOnFilterAll();
+    }
+    if (!FILTER_NON_STOP && !FILTER_ONE_PLANE_CHANGE && !FILTER_TWO_PLANE_CHANGES && !FILTER_THREE_PLANE_CHANGES) {
+      turnOnFilterNone();
+    }
+  }, [FILTER_NON_STOP, FILTER_ONE_PLANE_CHANGE, FILTER_TWO_PLANE_CHANGES, FILTER_THREE_PLANE_CHANGES]);
 
   return (
     <aside className={classes.filterFlight}>
@@ -30,7 +42,8 @@ const FilterFlight = ({
                 className={classes.check__input}
                 onChange={filterAll}
                 checked={
-                  state.filterFlightReducer.filter === "FILTER_ALL" || (second && third && fourth && fifth)
+                  filter === "FILTER_ALL" ||
+                  (FILTER_NON_STOP && FILTER_ONE_PLANE_CHANGE && FILTER_TWO_PLANE_CHANGES && FILTER_THREE_PLANE_CHANGES)
                     ? "checked"
                     : ""
                 }
@@ -45,7 +58,7 @@ const FilterFlight = ({
                 type="checkbox"
                 className={classes.check__input}
                 onChange={filterNonStop}
-                checked={state.filterFlightReducer.filter === "FILTER_ALL" || second ? "checked" : ""}
+                checked={filter === "FILTER_ALL" || FILTER_NON_STOP ? "checked" : ""}
               />
               <span className={classes.check__box}></span>
               Без пересадок
@@ -57,7 +70,7 @@ const FilterFlight = ({
                 type="checkbox"
                 className={classes.check__input}
                 onChange={filterOnePlaneChange}
-                checked={state.filterFlightReducer.filter === "FILTER_ALL" || third ? "checked" : ""}
+                checked={filter === "FILTER_ALL" || FILTER_ONE_PLANE_CHANGE ? "checked" : ""}
               />
               <span className={classes.check__box}></span>1 пересадка
             </label>
@@ -68,7 +81,7 @@ const FilterFlight = ({
                 type="checkbox"
                 className={classes.check__input}
                 onChange={filterTwoPlaneChanges}
-                checked={state.filterFlightReducer.filter === "FILTER_ALL" || fourth ? "checked" : ""}
+                checked={filter === "FILTER_ALL" || FILTER_TWO_PLANE_CHANGES ? "checked" : ""}
               />
               <span className={classes.check__box}></span>2 пересадки
             </label>
@@ -79,7 +92,7 @@ const FilterFlight = ({
                 type="checkbox"
                 className={classes.check__input}
                 onChange={filterThreePlaneChange}
-                checked={state.filterFlightReducer.filter === "FILTER_ALL" || fifth ? "checked" : ""}
+                checked={filter === "FILTER_ALL" || FILTER_THREE_PLANE_CHANGES ? "checked" : ""}
               />
               <span className={classes.check__box}></span>3 пересадки
             </label>
@@ -90,17 +103,10 @@ const FilterFlight = ({
   );
 };
 
-// FilterFlight.propTypes = {
-//   // bla: PropTypes.string,
-// };
-
-// FilterFlight.defaultProps = {
-//   // bla: 'test',
-// };
-
 const mapStateToProps = (state) => {
   return {
-    state,
+    filters: state.filterFlightReducer.filters,
+    filter: state.filterFlightReducer.filter,
   };
 };
 

@@ -1,3 +1,3 @@
-import FlightCardList from "./FlightCardList";
+import FlightCardList from "./ui";
 
 export default FlightCardList;

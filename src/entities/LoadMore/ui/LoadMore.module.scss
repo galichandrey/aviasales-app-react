@@ -21,3 +21,9 @@
   border: 1px solid #ffff;
   cursor: pointer;
 }
+
+@media screen and (max-width: 1024px) {
+  .main__button--loadmore {
+    max-width: 350px;
+  }
+}

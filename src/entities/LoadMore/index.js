@@ -1,3 +1,3 @@
-import LoadMore from "./LoadMore";
+import LoadMore from "./ui/";
 
 export default LoadMore;

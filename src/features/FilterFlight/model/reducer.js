@@ -1,51 +1,71 @@
+import {
+  FILTER_ALL,
+  FILTER_NONE,
+  FILTER_NON_STOP,
+  FILTER_ONE_PLANE_CHANGE,
+  FILTER_TWO_PLANE_CHANGES,
+  FILTER_THREE_PLANE_CHANGES,
+  GET_FILTERED_TICKETS,
+  CLEAR_FILTERED_TICKETS,
+} from "./types";
+
 const initialState = {
-  filter: "FILTER_ALL",
-  payload: { first: true, second: true, third: true, fourth: true, fifth: true },
+  filters: {
+    FILTER_ALL: false,
+    FILTER_NON_STOP: true,
+    FILTER_ONE_PLANE_CHANGE: false,
+    FILTER_TWO_PLANE_CHANGES: false,
+    FILTER_THREE_PLANE_CHANGES: false,
+  },
 };
 
 export const filterFlightReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "FILTER_ALL":
-      console.log(state);
+    case FILTER_ALL:
       return {
         ...state,
-        filter: "FILTER_ALL",
-        payload: action.payload,
+        filters: action.filters,
       };
-    case "FILTER_NONE":
-      console.log(state);
+
+    case FILTER_NONE:
       return {
         ...state,
-        filter: "FILTER_NONE",
-        payload: action.payload,
+        filters: action.filters,
       };
-    case "FILTER_NON_STOP":
-      console.log(state);
+    case FILTER_NON_STOP:
       return {
         ...state,
-        filter: "",
-        payload: { ...state.payload, ...action.payload },
+        filters: { ...state.filters, ...action.filters },
       };
-    case "FILTER_ONE_PLANE_CHANGE":
-      console.log(state);
+    case FILTER_ONE_PLANE_CHANGE:
       return {
         ...state,
-        filter: "",
-        payload: { ...state.payload, ...action.payload },
+        filters: { ...state.filters, ...action.filters },
       };
-    case "FILTER_TWO_PLANE_CHANGES":
-      console.log(state);
+    case FILTER_TWO_PLANE_CHANGES:
       return {
         ...state,
-        filter: "",
-        payload: { ...state.payload, ...action.payload },
+        filters: { ...state.filters, ...action.filters },
       };
-    case "FILTER_THREE_PLANE_CHANGES":
-      console.log(state);
+    case FILTER_THREE_PLANE_CHANGES:
       return {
         ...state,
-        filter: "",
-        payload: { ...state.payload, ...action.payload },
+        filters: { ...state.filters, ...action.filters },
+      };
+
+    case GET_FILTERED_TICKETS:
+      console.log("filteredTicketsUUID >>>> ", action.filteredTicketsUUID);
+      return {
+        ...state,
+        filteredTicketsUUID: [...action.filteredTicketsUUID],
+      };
+
+    case CLEAR_FILTERED_TICKETS:
+      return {
+        ...state,
+        filteredTickets: [],
+        filteredTicketsUUID: [],
+        isCleared: true,
       };
 
     default:
